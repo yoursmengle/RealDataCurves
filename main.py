@@ -9,6 +9,7 @@ from pyqtgraph.Qt import QtCore, QtGui
 from myPlotWidget import *
 from myQTableWidget import *
 from dataConfig import *
+from testSend import *
 import time
 
 class myMainWindow(QtGui.QMainWindow):
@@ -142,6 +143,8 @@ class myMainWindow(QtGui.QMainWindow):
         #创建曲线区下面的操作按钮部分
         gCmd =QtGui.QGroupBox('控制面板')
         h=QtGui.QHBoxLayout()
+        self.testDataChk = QtGui.QCheckBox('测试数据')
+        self.testDataChk.setChecked(True)
         self.saveChk = QtGui.QCheckBox('自动保存')
         self.saveChk.setChecked(True)  #启动时缺省自动保存
         self.saveChk.setFont(QtGui.QFont("song", 18, QtGui.QFont.Bold))
@@ -155,7 +158,8 @@ class myMainWindow(QtGui.QMainWindow):
         self.saveFileButton.setFont(QtGui.QFont("song", 18, QtGui.QFont.Bold))
         self.quitButton = QtGui.QPushButton('保存退出')
         self.quitButton.setFont(QtGui.QFont("song", 18, QtGui.QFont.Bold))
-       
+
+        h.addWidget(self.testDataChk)
         h.addStretch(6)
         h.addWidget(self.saveChk)
         h.addStretch(2)
@@ -199,8 +203,12 @@ if __name__ == '__main__':
     udp = udpRecvThread()
     udp.startSave()
     udp.start()
+
+    testSend = testSendThread()
+    testSend.start()
+
     app = QtGui.QApplication([])
-   
+
     mw = myMainWindow()
     mw.show()
     
@@ -338,6 +346,15 @@ if __name__ == '__main__':
         else:
             udp.stopSave()
     mw.saveChk.stateChanged.connect(saveFileCheck)
+
+    def testDataCheck(state):
+        if state == QtCore.Qt.Checked:
+            testSend.resume()
+        else:
+            testSend.pause()
+    mw.testDataChk.stateChanged.connect(testDataCheck)
+
+
 
     if (sys.flags.interactive != 1) or not hasattr(QtCore, 'PYQT_VERSION'):
         QtGui.QApplication.instance().exec_()
