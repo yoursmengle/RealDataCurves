@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Displayer of Real Data from UDP
+Displayer of CSV data from MIC7001
 Author: jhzhou
-Date: 2017-02-21
+Date: 2019-07-27
 """
 import numpy as np
 from pyqtgraph.Qt import QtCore, QtGui
@@ -18,8 +18,8 @@ class myMainWindow(QtGui.QMainWindow):
         self.initWindow();    
         
     def initWindow(self):
-        self.setWindowTitle('Curves displayer by jhzhou')
-        self.resize(1680,1024)
+        self.setWindowTitle('MIC7001 displayer by jhzhou')
+        self.resize(1920,1080)
         cw = QtGui.QWidget() 
         self.setCentralWidget(cw)
         mh = QtGui.QHBoxLayout()
@@ -28,7 +28,7 @@ class myMainWindow(QtGui.QMainWindow):
         self.pw = myPlotWidget(curvesNum = 8)
         
         #创建曲线下面的说明
-        g8 =QtGui.QGroupBox('曲线颜色说明')
+        g8 =QtGui.QGroupBox('曲线设置')
         self.nameCurve = [(QtGui.QLabel('未设置')), (QtGui.QLabel('未设置')), (QtGui.QLabel('未设置')), (QtGui.QLabel('未设置')), (QtGui.QLabel('未设置')), (QtGui.QLabel('未设置')), (QtGui.QLabel('未设置')),(QtGui.QLabel('未设置'))]
         h8=QtGui.QHBoxLayout()
         self.txtCurve1 = QtGui.QPushButton('曲线1')
