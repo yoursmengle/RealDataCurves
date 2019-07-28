@@ -12,7 +12,7 @@ class myPlotWidget(pg.PlotWidget):
     curvesNum= 8
     penColor = [(255, 0, 0), (0, 255, 0), (0, 0, 255), (255, 255, 0), (0, 255, 255), (255, 0, 255), (255, 255, 255), (128, 128, 0)]
     penBlack = (0, 0, 0)
-    cfgCurve = np.array( [(0, 1, 2, 3, 4, 5, 6, 7), (True, True, True, True, True, True, True, True)])   #配置8条曲线，对应的数据序号和是否显示标志
+    cfgCurve = np.array( [(18, 1, 2, 3, 4, 5, 6, 19), (True, True, True, True, True, True, True, True)])   #配置8条曲线，对应的数据序号和是否显示标志
     gCurves =[1, 2, 3, 4, 5, 6, 7, 8]
     def __init__(self, parent=None, curvesNum = 8):
         if curvesNum >= 8:
@@ -29,7 +29,7 @@ class myPlotWidget(pg.PlotWidget):
         for i in range(curvesNum):
             self.gCurves[i] = self.plot(pen=self.penColor[i])
             
-        self.cfgCurve    
+        #self.cfgCurve    
         
     def setCurve(self, curNo,  dataNo):
         if dataNo < 0:

@@ -10,7 +10,7 @@ from myPlotWidget import  *
 from dataConfig import *
 
 class myQTableWidget(QtGui.QTableWidget):
-    selected = [0, 1, 2, 3, 4, 5, 6, 7]   #8条曲线是否被选择，
+    selected = [18, 1, 2, 3, 4, 5, 6, 19]   #8条曲线是否被选择，
     curveChanged = [True, True, True, True, True, True, True, True]  #曲线变化标志
     def __init__(self, parent=None):
         super().__init__()

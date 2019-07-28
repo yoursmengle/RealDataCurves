@@ -19,7 +19,7 @@ class myMainWindow(QtGui.QMainWindow):
         
     def initWindow(self):
         self.setWindowTitle('MIC7001 displayer by jhzhou')
-        self.resize(1920,1080)
+        self.resize(1680,920)
         cw = QtGui.QWidget() 
         self.setCentralWidget(cw)
         mh = QtGui.QHBoxLayout()
@@ -143,10 +143,10 @@ class myMainWindow(QtGui.QMainWindow):
         #创建曲线区下面的操作按钮部分
         gCmd =QtGui.QGroupBox('控制面板')
         h=QtGui.QHBoxLayout()
-        self.testDataChk = QtGui.QCheckBox('测试数据')
-        self.testDataChk.setChecked(True)
+        self.csvbtn = QtGui.QPushButton('打开CSV文件')
+        self.csvbtn.setFont(QtGui.QFont("song", 18, QtGui.QFont.Bold))
         self.saveChk = QtGui.QCheckBox('自动保存')
-        self.saveChk.setChecked(True)  #启动时缺省自动保存
+        self.saveChk.setChecked(False)  #启动时缺省自动保存
         self.saveChk.setFont(QtGui.QFont("song", 18, QtGui.QFont.Bold))
         self.runButton = QtGui.QPushButton('暂停')
         self.runButton.setFont(QtGui.QFont("song", 18, QtGui.QFont.Bold))
@@ -159,7 +159,7 @@ class myMainWindow(QtGui.QMainWindow):
         self.quitButton = QtGui.QPushButton('保存退出')
         self.quitButton.setFont(QtGui.QFont("song", 18, QtGui.QFont.Bold))
 
-        h.addWidget(self.testDataChk)
+        h.addWidget(self.csvbtn)
         h.addStretch(6)
         h.addWidget(self.saveChk)
         h.addStretch(2)
@@ -190,8 +190,10 @@ class myMainWindow(QtGui.QMainWindow):
         g0.setLayout(v0)
         
         mh.addLayout(v_left, stretch=4)
-        mh.addWidget(g0, stretch=1)        
- 
+        mh.addWidget(g0, stretch=1)    
+   
+    
+    
 ## Start Qt event loop unless running in interactive mode or using pyside.
 if __name__ == '__main__':
     import sys
@@ -203,9 +205,6 @@ if __name__ == '__main__':
     udp = udpRecvThread()
     udp.startSave()
     udp.start()
-
-    testSend = testSendThread()
-    testSend.start()
 
     app = QtGui.QApplication([])
 
@@ -347,12 +346,19 @@ if __name__ == '__main__':
             udp.stopSave()
     mw.saveChk.stateChanged.connect(saveFileCheck)
 
-    def testDataCheck(state):
-        if state == QtCore.Qt.Checked:
-            testSend.resume()
-        else:
-            testSend.pause()
-    mw.testDataChk.stateChanged.connect(testDataCheck)
+    testSend = testSendThread()
+    def open_csv_clicked():
+        fileName, filetype = QFileDialog.getOpenFileName(  
+                                    caption = "选取文件",  
+                                    directory = '.',  
+                                    filter = "csv Files (*.csv)"
+                                    )
+        if fileName == '':
+            return
+        
+        testSend.csvfile = fileName
+        testSend.start() 
+    mw.csvbtn.clicked.connect(open_csv_clicked)
 
 
 
