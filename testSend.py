@@ -10,13 +10,14 @@ import dataConfig
 import csv
 import numpy as np
 
-csvfile = r'inputdata1.csv'
+
 
 class testSendThread(QtCore.QThread):
     HOST = '127.0.0.1'
     PORT = dataConfig.cfgRecvPort
     SERVER = (HOST, PORT)
     f_pause = False
+    csvfile = r'inputdata1.csv'
 
     def __init__(self):
         super().__init__()
@@ -29,6 +30,8 @@ class testSendThread(QtCore.QThread):
     def resume(self):
         self.f_pause = False
 
+    def set_datafile(self, csvfile):
+        self.csvfile = csvfile
 
     def run(self):
         serial = 0
@@ -36,7 +39,7 @@ class testSendThread(QtCore.QThread):
         num_float = dataConfig.cfgDataNumber
         length = num_float * 4;
        
-        data = np.loadtxt(csvfile, str, delimiter=',', skiprows = 1)
+        data = np.loadtxt(self.csvfile, str, delimiter=',', skiprows = 1)
         (rows, cols) = data.shape 
         if cols < num_float:
             print('csv file format error')

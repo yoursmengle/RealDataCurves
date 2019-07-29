@@ -18,7 +18,7 @@ class myMainWindow(QtGui.QMainWindow):
         self.initWindow();    
         
     def initWindow(self):
-        self.setWindowTitle('MIC7001 displayer by jhzhou')
+        self.setWindowTitle('MIC7001 data displayer by jhzhou')
         self.resize(1680,920)
         cw = QtGui.QWidget() 
         self.setCentralWidget(cw)
@@ -355,9 +355,11 @@ if __name__ == '__main__':
                                     )
         if fileName == '':
             return
-        
-        testSend.csvfile = fileName
+        print(fileName)
+        testSend.set_datafile(fileName)
+        print(testSend.csvfile)
         testSend.start() 
+        
     mw.csvbtn.clicked.connect(open_csv_clicked)
 
 
