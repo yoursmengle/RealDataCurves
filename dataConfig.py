@@ -12,7 +12,8 @@ cfgSaveFileDir = 'D:/curvesData/'
 
 
 #数据名称，与实际的数据一一对应
-cfgDataNames = [ '机械转速', 
+cfgDataNames = [
+            '机械转速', 
             '电磁转速', 
             '电流d', 
             '电流q', 

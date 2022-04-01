@@ -23,13 +23,12 @@ class myPlotWidget(pg.PlotWidget):
         self.setRange(xRange=[-100, 0])
         self.setLimits(xMax=0)
         self.initCurves(curvesNum)
-        
+
     def initCurves(self, curvesNum):    
         self.curvesNum = curvesNum
         for i in range(curvesNum):
             self.gCurves[i] = self.plot(pen=self.penColor[i])
-            
-        self.cfgCurve    
+            self.cfgCurve[0, i] = i    
         
     def setCurve(self, curNo,  dataNo):
         if dataNo < 0:
