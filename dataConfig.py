@@ -13,25 +13,20 @@ cfgSaveFileDir = 'D:/curvesData/'
 
 #数据名称，与实际的数据一一对应
 cfgDataNames = [
-            '机械转速', 
-            '电磁转速', 
-            '电流d', 
-            '电流q', 
-            '电压d', 
-            '电压q', 
-            '机械角度', 
-            '电磁角度', 
-            '绝对位置', 
-            '保留1', 
-            '保留2', 
-            '保留3'
-            ]
+    '发动机转速', 
+    '主泵压力', 
+    'a', 
+    'b', 
+    'c', 
+    'd', 
+]
                             
 cfgDataNumber = len(cfgDataNames)
 
 class dataStructHead(BigEndianStructure):    #The datas are from network ( BigEndian)
-    _fields_=[('uHead', c_ubyte),    #帧头，固定为0x55
-                ('uSerial', c_ubyte),   #序列号，每帧自动加一
-                ('uLen', c_ushort)      #后面数据的总字节数，= 数据个数*4
-                ]
+    _fields_=[
+        ('uHead', c_ubyte),    #帧头，固定为0x55
+        ('uSerial', c_ubyte),   #序列号，每帧自动加一
+        ('uLen', c_ushort)      #后面数据的总字节数，= 数据个数*4
+    ]
 #帧头后面跟着实际的数据，格式为单精度浮点（32位）
